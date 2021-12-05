@@ -1,4 +1,4 @@
-import { HeroDeleteAction } from './../state/hero-action';
+import { HeroDeleteAction, HeroLoadingAction } from './../state/hero-action';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -19,16 +19,10 @@ export class HeroComponent implements OnInit, OnDestroy {
   subject$ = new BehaviorSubject<Hero[]>([]);
   heroSubject$: Observable<Hero[]> = this.store.pipe(select(getHeros));
 
-  constructor(private heroService: HeroService, private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { }
 
    ngOnInit() {
-    this.heroService.getHeros().pipe(takeUntil(this.subject$)).subscribe(resp => {
-      this.subject$.next(resp);
-    });
-    this.heroSubject$.subscribe(resp => {
-      console.log(resp);
-    })
-    this.handleOuput();
+    this.store.dispatch(new HeroLoadingAction());
   }
 
   addHero() {
@@ -37,12 +31,6 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   deletetHero() {
     this.store.dispatch(new HeroDeleteAction({id: 2, name: 'huyen'}));
-  }
-
-  handleOuput() {
-    this.subject$.subscribe(resp => {
-      console.log(resp);
-    })
   }
 
   ngOnDestroy(): void {

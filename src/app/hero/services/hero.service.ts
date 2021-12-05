@@ -22,6 +22,11 @@ export class HeroService {
   public getHeros(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.URL).pipe(map(heros => heros.map(hero => new Hero(hero))));
   }
+
+    // public getHeros() {
+    //   return this.http.get(this.URL).pipe();
+    // }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   

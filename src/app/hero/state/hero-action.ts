@@ -5,7 +5,9 @@ export enum HeroActionTypes {
     ADD = '[HERO] ADD',
     VIEW = '[HERO] VIEW',
     DELETE = '[HERO] DELETE',
-    EDIT = '[HERO] EDIT'
+    EDIT = '[HERO] EDIT',
+    LOADING = '[HERO] Loading Hero',
+    LOADING_SUCCESS = '[HERO] Loading Success'
 }
 
 export class HeroAddAction implements Action {
@@ -15,7 +17,7 @@ export class HeroAddAction implements Action {
 
 export class HeroViewAction implements Action {
     public readonly type = HeroActionTypes.VIEW;
-    constructor(public payload: Hero) {}
+    constructor() {}
 }
 
 export class HeroDeleteAction implements Action {
@@ -28,4 +30,13 @@ export class HeroEditAction implements Action {
     constructor(public payload: Hero) {}
 }
 
-export type HeroActions = HeroAddAction | HeroViewAction | HeroDeleteAction | HeroEditAction;
+export class HeroLoadingAction implements Action {
+    readonly type = HeroActionTypes.LOADING
+}
+
+export class HeroLoadingSuccessAction implements Action {
+    readonly type = HeroActionTypes.LOADING_SUCCESS
+    constructor(public payload: Hero[]) {}
+}
+
+export type HeroActions = HeroAddAction | HeroViewAction | HeroDeleteAction | HeroEditAction | HeroLoadingAction | HeroLoadingSuccessAction;

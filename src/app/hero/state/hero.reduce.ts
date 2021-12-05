@@ -7,16 +7,7 @@ export interface HeroState {
 }
 
 const initHeroState: HeroState = {
-    heros: [
-        {
-            id: 1,
-            name: 'sang'
-        },
-        {
-            id: 2,
-            name: 'huyen'
-        }
-    ]
+    heros: []
 }
 
 export function HeroReduce(state: HeroState = initHeroState, action: HeroActions): HeroState {
@@ -30,6 +21,10 @@ export function HeroReduce(state: HeroState = initHeroState, action: HeroActions
             const index = state.heros.findIndex(item => item.id == action.payload.id);
             state.heros.splice(index, 1);
             return state;
+        case HeroActionTypes.LOADING:
+            return { ...state };
+        case HeroActionTypes.LOADING_SUCCESS:
+            return { heros: action.payload };
         default:
             return state;
     }
